@@ -26,16 +26,13 @@ def find_shortest_path(start: Tuple[int, int],
     
     while current.position != end:
         # Consider every neighboring nodes.
-        for move in [(0, -1), (0, 1), (-1, 0), (1, 0), (-1, -1), (-1, 1), (1, -1), (1, 1)]:
+        for move in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
             neighbor = Node(position=(current.position[0] + move[0], current.position[1] + move[1]), 
                             parent=current)
             if neighbor.position in obstacles or neighbor.position in closed_nodes_pos:
                 continue
 
-            if abs(move[0]) + abs(move[1]) == 1:
-                neighbor.g_score = current.g_score + 10
-            else:
-                neighbor.g_score = current.g_score + 14
+            neighbor.g_score = current.g_score + 1
             
             # Manhattan distance
             neighbor.h_score = abs(end[0]-neighbor.position[0]) + abs(end[1]-neighbor.position[1])
@@ -75,6 +72,6 @@ def find_shortest_path(start: Tuple[int, int],
 
 if __name__ == '__main__':
     start = (0, 0)
-    end = (10, 10)
-    obstacles = [(1, 1), (2, 2)]
+    end = (-3,3)
+    obstacles = [(0, 2), (-1, 2), (-2, 2), (-3, 2), (-4, 2), (-4, 3)]
     print(find_shortest_path(start, end, obstacles))
