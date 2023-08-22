@@ -1,3 +1,4 @@
+# A* Algorithm implementation with heapq
 # Use Manhattan distance as the heuristic function
 from typing import Tuple, List
 from heapq import heappush, heappop
@@ -41,8 +42,9 @@ def find_shortest_path(start: Tuple[int, int],
 
             neighbor.f_score = neighbor.g_score + neighbor.h_score
 
-            # If the neighbor is already in open_nodes and the new f_score is smaller than the existing one, update.
-            # Else if the neighbor is already in open_nodes but the new f_score is larger than or same with, continue.
+            # If the neighbor is already in open_nodes and the new f_score is less than the existing one, update.
+            # Else if the neighbor is already in open_nodes but the new f_score is greater than or same with the existing one, 
+            # continue without putting it in the open_nodes.
             no_update = False
             for node in open_nodes:
                 if node.position == neighbor.position and node.f_score > neighbor.f_score:
@@ -57,9 +59,12 @@ def find_shortest_path(start: Tuple[int, int],
             
             heappush(open_nodes, neighbor)
         
+        # Append current node's position to closed_node_pos and change current node.
+        # Take the node that has the lowest f_score among open_nodes.
         closed_nodes_pos.append(current.position)
         current = heappop(open_nodes)
 
+    # Reached end postion. Now backtrack the path we've came from.
     while current.position != start:
         shortest_path.insert(0, current.position)
         current = current.parent
