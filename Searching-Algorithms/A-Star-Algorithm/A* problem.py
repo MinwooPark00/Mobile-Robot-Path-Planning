@@ -72,6 +72,6 @@ def find_shortest_path(start: Tuple[int, int],
 
 if __name__ == '__main__':
     start = (0, 0)
-    end = (-3,3)
+    end = (100,100)
     obstacles = [(0, 2), (-1, 2), (-2, 2), (-3, 2), (-4, 2), (-4, 3)]
     print(find_shortest_path(start, end, obstacles))
